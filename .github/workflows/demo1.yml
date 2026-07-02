@@ -27,5 +27,7 @@ jobs:
         run: npm run build
   deploy:
     needs: build
-     - name: Deploy project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy project
         run: echo "Deploying..."
