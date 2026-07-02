@@ -1,21 +1,31 @@
-name: Events Demo 1
+name: deploy website
 on:
-   pull_request:
-      types:
-        - opened
+  push:
+    branch:
+      - master      
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Output event data
-        run: echo "${{ toJSON(github.event) }}"
       - name: Get code
         uses: actions/checkout@v3
       - name: Install dependencies
         run: npm ci
+      - name: Lint code
+        run: npm run lint
       - name: Test code
         run: npm run test
-      - name: Build code
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get a code
+        uses: actions/checkout@v3
+      - name: install dependencies
+        run: mpm ci      
+      - name: Build a website
         run: npm run build
-      - name: Deploy project
+  deploy:
+    needs: build
+     - name: Deploy project
         run: echo "Deploying..."
