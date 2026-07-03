@@ -27,8 +27,9 @@ jobs:
         run: npm run build
       - name: upload artifacts
         uses: actions/upload-artifact@v4
-        name: dist-files
-        path: dist
+        with:
+          name: dist-files
+          path: dist
           # dist
           # package.json
   deploy:
